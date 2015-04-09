@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>Registration</title>
+	</head>
+	<body>
+
+		<div style="width:450px;height:620px;border:2px solid #000; position: absolute; left:450px;top:5px">
+			<h2 style="position: absolute; left:120px; top:5px"> Registration Page</h2>
+			<div style="position: absolute; left:40px; top:100px; font-weight: bold;">
+				<form>
+					First Name&nbsp;
+					<input type="text" placeholder="Enter first name" id="fname"/>
+					<br>
+					<br>
+					Last Name &nbsp;
+					<input type="text" placeholder="Enter last name" id="lname"/>
+					<br>
+					<br>
+					Email  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="email" placeholder="Email" id="email" />
+					<br>
+					<br>
+					Password&nbsp;  &nbsp;&nbsp;
+					<input type="password" id="pass" placeholder="Password"/>
+					<br>
+					<br>
+					<progress id="progress" max="100"  style="position:absolute;left:280px; top:120px;width:100px;background:#FFFFFF ;">
+						<span>0</span>%
+					</progress>
+					Confirm
+					<br>
+					Password
+					<input type="password" id="pass2"  style="position:absolute;left:85px; top:165px;" placeholder="Must be same as password"/>
+					<br>
+					<br>
+					D.O.B
+					<input type="date" id="date" style="position:absolute;left:85px; top:210px;" />
+					<br>
+					<br>
+					D.O.B with
+					<br>
+					time
+					<input type="datetime" placeholder="Time" style="position:absolute;left:85px; top:250px;" id="datetime" />
+					<br>
+					<br>
+					Local DOB&nbsp;
+					<input type="time" id="time" />
+					<br>
+					<br>
+					SSN &nbsp;&nbsp;
+					<input required pattern="\d{3}-\d{2}-\d{4}" type="text" id="ssn"placeholder="SSN"  style="position:absolute;left:85px; top:340px;"/>
+					<br>
+					<br>
+					Phone &nbsp;
+					<input required pattern="\d{3}-\d{3}-\d{4}" type="text" id="phone"placeholder="Phone" style="position:absolute;left:85px; top:380px;"/>
+					<br>
+					<br>
+					Credit Card
+					<br>
+					No
+					<input required pattern="[0-9]{12,16}" type="text" id="credit" placeholder="Credit Card" style="position:absolute;left:85px; top:435px;"/>
+					<p id="strength" style="position: absolute; left:280px;top:130px"> </p>
+					<button  type="submit" id="but" style="position: absolute; left:150px;top:480px" >
+						Register
+					</button>
+				</form>
+			</div>
+		</div>
+		<script src="modernizr.custom.30797.js"></script>
+		<script type="text/javascript">
+			// Function to check password
+			document.getElementById("pass").oninput = function() {
+				var progress = document.getElementById("progress");
+				var pass = document.getElementById("pass");
+				var Npass = /^(.*?[A-Z]){3,}/;
+				// Capitol
+				var Mpass = /^(.*?[a-z]){2,}/;
+				//Small
+				var Spass = /^(?=.*[@#!$%^&+=]).{2,}$/;
+				//Special 3U, 2L, 5<S
+				if (pass.value.length < 25) {
+
+					if (pass.value.match(/^(.*?[A-Z]){3,}/) && pass.value.match(/^(.*?[a-z]){2,}/) && pass.value.match(/^(?=.*[@#!$%^&+=]{2,})/)) 
+					{
+						document.getElementById("strength").innerHTML = "Normal";
+						progress.value = 40;
+					}
+					if (pass.value.match(/^(.*?[A-Z]){3,}/) && pass.value.match(/^(.*?[a-z]){2,}/) && pass.value.match(/^(?=.*[@#!$%^&+=]{3,5})/)) {
+						document.getElementById("strength").innerHTML = "Medium";
+						progress.value = 75;
+					}
+					if (pass.value.match(/^(.*?[A-Z]){3,}/) && pass.value.match(/^(.*?[a-z]){2,}/) && pass.value.match(/^(?=.*[@#!$%^&+=]{6,})/)) {
+						document.getElementById("strength").innerHTML = "Strong";
+						progress.value = 100;
+					}
+				} else 
+				{
+					alert("The password length exceeds the maximum limit");
+				}
+			};
+			// Modernizr
+			document.getElementById("but").onclick = function() {
+				if (navigator.onLine) 
+				{
+					if (Modernizr.sessionstorage) 
+					{
+        				sessionStorage.setItem(firstname, fname.value);
+        				sessionStorage.setItem(lastname, lname.value);
+        				sessionStorage.setItem(email, email.value);
+        				sessionStorage.setItem(password, pass.value);
+        				sessionStorage.setItem(dob, date.value);
+        				sessionStorage.setItem(dobtime, datetime.value);
+        				sessionStorage.setItem(ssn, ssn.value);
+        				sessionStorage.setItem(phone, phone.value);
+        				sessionStorage.setItem(credit, credit.value);
+    				}
+				} 
+				else 
+				{
+					alert("The internet has  got disconnected");
+					alert("Storing values in local variables");
+					if (Modernizr.localstorage) 
+					{
+						localStorage.setItem(fname, fname.value);
+						localStorage.setItem(lastname, lname.value);
+						localStorage.setItem(email, email.value);
+						localStorage.setItem(password, pass.value);
+						localStorage.setItem(dob, date.value);
+						localStorage.setItem(dobtime, datetime.value);
+						localStorage.setItem(ssn, ssn.value);
+						localStorage.setItem(phone, phone.value);
+						localStorage.setItem(credit, credit.value);
+					}
+				}				
+			};
+		</script>
+	</body>
+</html>
